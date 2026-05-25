@@ -1,0 +1,36 @@
+{% extends 'calorie_tracker/base.html' %}
+
+{% block content %}
+<div class="bg-white p-6 rounded shadow">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Food Items</h2>
+        <a href="{% url 'add_food' %}" class="bg-green-600 text-white px-4 py-2 rounded">
+            Add Food
+        </a>
+    </div>
+
+    <h3 class="text-lg font-semibold mb-4">
+        Total Calories: {{ total_calories }}
+    </h3>
+
+    {% for food in foods %}
+        <div class="border p-4 mb-3 rounded">
+            <h4 class="font-bold">{{ food.name }}</h4>
+            <p>Quantity: {{ food.quantity }}</p>
+            <p>Calories: {{ food.calories }}</p>
+
+            <div class="mt-2">
+                <a href="{% url 'edit_food' food.id %}" class="text-blue-600">Edit</a>
+                |
+                <a href="{% url 'delete_food' food.id %}" class="text-red-600">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+        <p>No food items added yet.</p>
+    {% endfor %}
+
+    <a href="{% url 'reset_foods' %}" class="bg-red-600 text-white px-4 py-2 rounded inline-block mt-4">
+        Reset Daily Count
+    </a>
+</div>
+{% endblock %}
